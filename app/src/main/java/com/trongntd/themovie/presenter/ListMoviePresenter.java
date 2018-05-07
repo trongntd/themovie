@@ -27,8 +27,8 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.ViewAct
 
                 if (response.isSuccessful()) {
                     MovieList movieList = response.body();
-                    for (Movie m : movieList.movies) {
-                        Log.e("loadPopularMovies", "title : " + m.title);
+                    if (viewAction != null) {
+                        viewAction.showListMovie(movieList.movies);
                     }
                 }
             }
