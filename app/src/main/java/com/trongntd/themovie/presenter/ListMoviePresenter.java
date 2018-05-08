@@ -13,28 +13,38 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
         this.movieRepository = movieRepository;
     }
 
+    private MovieRepository.MovieRepositoryCallback<MovieList> mGetMoviesCallback = new MovieRepository.MovieRepositoryCallback<MovieList>() {
+        @Override
+        public void onSuccess(MovieList movieList) {
+            if (view != null) {
+                view.showLoading(false);
+                view.showListMovie(movieList.movies);
+            }
+        }
+
+        @Override
+        public void onError(int error, String message) {
+            if (view != null) {
+                view.showLoading(false);
+                view.showError(message);
+            }
+        }
+    };
+
     public void loadPopularMovies(int page) {
         if (view != null) {
             view.showLoading(true);
         }
 
-        movieRepository.getPopularMovies(page, new MovieRepository.MovieRepositoryCallback<MovieList>() {
-            @Override
-            public void onSuccess(MovieList movieList) {
-                if (view != null) {
-                    view.showLoading(false);
-                    view.showListMovie(movieList.movies);
-                }
-            }
+        movieRepository.getPopularMovies(page, mGetMoviesCallback);
+    }
 
-            @Override
-            public void onError(int error, String message) {
-                if (view != null) {
-                    view.showLoading(false);
-                    view.showError(message);
-                }
-            }
-        });
+    public void loadMostRatedMovies(int page) {
+        if (view != null) {
+            view.showLoading(true);
+        }
+
+        movieRepository.getTopRatedMovies(page, mGetMoviesCallback);
     }
 
     public interface View {
