@@ -18,11 +18,12 @@ import com.trongntd.themovie.R;
 import com.trongntd.themovie.adapter.ListMovieAdapter;
 import com.trongntd.themovie.entity.Movie;
 import com.trongntd.themovie.presenter.ListMoviePresenter;
+import com.trongntd.themovie.repository.MovieRepositoryImp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-abstract public class ListMovieFragment extends BaseFragment implements ListMoviePresenter.ViewAction{
+abstract public class ListMovieFragment extends BaseFragment implements ListMoviePresenter.View{
     {
         layoutResId = R.layout.fragment_list_movie;
     }
@@ -39,7 +40,7 @@ abstract public class ListMovieFragment extends BaseFragment implements ListMovi
         rvListMovie = rootView.findViewById(R.id.rv_list_movie);
         pbLoading = rootView.findViewById(R.id.pb_loading_movie);
 
-        listMoviePresenter = new ListMoviePresenter();
+        listMoviePresenter = new ListMoviePresenter(new MovieRepositoryImp());
         listMoviePresenter.attachView(this);
         Log.e("adad", "" + (rvListMovie == null));
         adapter = new ListMovieAdapter(activity, new ArrayList<Movie>());
