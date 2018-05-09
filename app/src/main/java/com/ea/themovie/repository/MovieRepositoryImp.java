@@ -36,70 +36,41 @@ public class MovieRepositoryImp implements MovieRepository {
 
     @Override
     public void getPopularMovies(int page, final MovieRepositoryCallback<MovieList> callback) {
-        movieApi.getPopularMovies(page).enqueue(new Callback<MovieList>() {
-            @Override
-            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onSuccess(response.body());
-                    } else {
-                        callback.onError(response.code(), response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieList> call, Throwable t) {
-                if (callback != null) {
-                    callback.onError(Error.UNKNOWN, null);
-                }
-            }
-        });
+        movieApi.getPopularMovies(page).enqueue(new MobileApiCallback<>(callback));
     }
 
     @Override
     public void getTopRatedMovies(int page, final MovieRepositoryCallback<MovieList> callback) {
-        movieApi.getTopRatedMovies(page).enqueue(new Callback<MovieList>() {
-            @Override
-            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onSuccess(response.body());
-                    } else {
-                        callback.onError(response.code(), response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieList> call, Throwable t) {
-                if (callback != null) {
-                    callback.onError(Error.UNKNOWN, null);
-                }
-            }
-        });
+        movieApi.getTopRatedMovies(page).enqueue(new MobileApiCallback<>(callback));
     }
 
     @Override
     public void getMovieVideo(String movieId, final MovieRepositoryCallback<MovieVideo> callback) {
-        movieApi.getMovieVideo(movieId).enqueue(new Callback<MovieVideo>() {
-            @Override
-            public void onResponse(Call<MovieVideo> call, Response<MovieVideo> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onSuccess(response.body());
-                    } else {
-                        callback.onError(response.code(), response.message());
-                    }
-                }
-            }
+        movieApi.getMovieVideo(movieId).enqueue(new MobileApiCallback<>(callback));
+    }
 
-            @Override
-            public void onFailure(Call<MovieVideo> call, Throwable t) {
-                if (callback != null) {
-                    callback.onError(Error.UNKNOWN, null);
+    class MobileApiCallback<T> implements Callback<T>{
+        MovieRepositoryCallback<T> callback;
+        MobileApiCallback( MovieRepositoryCallback<T> callback){
+            this.callback = callback;
+        }
+
+        @Override
+        public void onResponse(Call<T> call, Response<T> response) {
+            if (callback != null) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError(response.code(), response.message());
                 }
             }
-        });
+        }
+
+        @Override
+        public void onFailure(Call<T> call, Throwable t) {
+            if (callback != null) {
+                callback.onError(Error.UNKNOWN, null);
+            }
+        }
     }
 }

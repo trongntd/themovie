@@ -18,28 +18,19 @@ import java.util.List;
 
 public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.ViewHolder>{
     private ArrayList<Movie> mList;
-    private Context mContext;
     private LayoutInflater inflater;
 
     public ListMovieAdapter(Context context, ArrayList<Movie> list){
-        mList = list;
-        mContext = context;
+        mList = (list != null)? list : new ArrayList<Movie>();
         inflater = LayoutInflater.from(context);
     }
 
     public void setData(List<Movie> list) {
-        if (mList == null) {
-            mList = new ArrayList<>();
-        } else {
-            mList.clear();
-        }
+        mList.clear();
         mList.addAll(list);
     }
 
     public void addData(List<Movie> list) {
-        if (mList == null) {
-            mList = new ArrayList<>();
-        }
         mList.addAll(list);
     }
 

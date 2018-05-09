@@ -25,7 +25,6 @@ public class BaseFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (layoutResId > 0) {
-            Log.e("vo day", "vo day");
             rootView = inflater.inflate(layoutResId, container, false);
         } else {
             rootView = super.onCreateView(inflater, container, savedInstanceState);
