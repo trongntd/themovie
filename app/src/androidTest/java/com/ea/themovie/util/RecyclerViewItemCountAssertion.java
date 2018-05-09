@@ -1,4 +1,4 @@
-package com.ea.themovie;
+package com.ea.themovie.util;
 
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
