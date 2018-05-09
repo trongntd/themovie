@@ -4,26 +4,25 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.ea.themovie.MovieApplication;
+import com.ea.themovie.MainActivity;
 import com.ea.themovie.R;
 import com.ea.themovie.adapter.ListMovieAdapter;
 import com.ea.themovie.entity.Movie;
 import com.ea.themovie.presenter.ListMoviePresenter;
 import com.ea.themovie.repository.MovieRepository;
-import com.ea.themovie.repository.MovieRepositoryImp;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-abstract public class ListMovieFragment extends BaseFragment implements ListMoviePresenter.View, View.OnClickListener{
+abstract public class ListMovieFragment extends BaseFragment
+        implements ListMoviePresenter.View, View.OnClickListener, ListMovieAdapter.OnItemMovieClick{
     {
         layoutResId = R.layout.fragment_list_movie;
     }
@@ -52,11 +51,16 @@ abstract public class ListMovieFragment extends BaseFragment implements ListMovi
 
         listMoviePresenter = new ListMoviePresenter(movieRepository);
         listMoviePresenter.attachView(this);
-        Log.e("adad", "" + (rvListMovie == null));
         adapter = new ListMovieAdapter(activity, new ArrayList<Movie>());
+        adapter.setListener(this);
         rvListMovie.setAdapter(adapter);
         rvListMovie.setLayoutManager(new GridLayoutManager(activity, 2));
         loadData();
+    }
+
+    @Override
+    public void onFavoriteToggle(Movie movie) {
+        listMoviePresenter.favoriteToggle(movie);
     }
 
     @Override
@@ -75,13 +79,12 @@ abstract public class ListMovieFragment extends BaseFragment implements ListMovi
     @Override
     public void showLoading(boolean show) {
         pbLoading.setVisibility(show? View.VISIBLE : View.GONE);
-//        pbLoading.setVisibility(View.VISIBLE) ;
     }
 
     @Override
-    public void showListMovie(List<Movie> movies) {
+    public void showListMovies(List<Movie> movies) {
         btnRetry.setVisibility(View.GONE);
-        adapter.addData(movies);
+        adapter.setData(movies);
         adapter.notifyDataSetChanged();
     }
 
@@ -90,5 +93,15 @@ abstract public class ListMovieFragment extends BaseFragment implements ListMovi
         Toast.makeText(activity, error, Toast.LENGTH_SHORT).show();
         btnRetry.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public void refreshMoviesItem(Movie movie, boolean notifyNeighbor) {
+        if (movie != null) {
+            adapter.notifyDataItemChanged(movie);
+            if (notifyNeighbor){
+                ((MainActivity)activity).notifyDataNeighborTab(movie);
+            }
+        }
     }
 }

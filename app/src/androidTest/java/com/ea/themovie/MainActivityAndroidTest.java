@@ -8,7 +8,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
-
 import com.ea.themovie.util.RecyclerViewItemCountAssertion;
 import com.ea.themovie.util.TestData;
 import com.ea.themovie.util.ViewPagerIdlingResource;
@@ -25,10 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.internal.util.Checks.checkNotNull;
 import static com.ea.themovie.util.TestUtil.atPosition;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -40,7 +36,6 @@ public class MainActivityAndroidTest {
     public TestName testName = new TestName();
 
     @Rule
-//    public ActivityTestRule<MainActivity> mMainActivityRule = new ActivityTestRule<>(MainActivity.class, false, false);
     public ActivityTestRule<MainActivity> mMainActivityRule = new ActivityTestRule<MainActivity>(MainActivity.class){
         @Override
         protected void beforeActivityLaunched() {
@@ -48,11 +43,6 @@ public class MainActivityAndroidTest {
             setupDataTest();
         }
     };
-
-    @Before
-    public void setup() {
-
-    }
 
     @Test
     public void loadListPopularMovies_withRepositoryHavingMovies_checkTotalItem() {

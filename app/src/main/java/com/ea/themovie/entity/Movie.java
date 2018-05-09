@@ -18,5 +18,13 @@ public class Movie {
     @SerializedName("vote_average")
     public String voteAverage;
 
-    public String isFavorited;
+    public boolean isFavorite;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Movie) {
+            return ((Movie) obj).id == this.id;
+        }
+        return super.equals(obj);
+    }
 }

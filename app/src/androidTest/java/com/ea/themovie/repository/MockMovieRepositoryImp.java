@@ -1,23 +1,20 @@
 package com.ea.themovie.repository;
 
-import android.util.Log;
+import android.content.SharedPreferences;
 
-import com.ea.themovie.api.Error;
-import com.ea.themovie.api.MovieApi;
 import com.ea.themovie.entity.MovieList;
-import com.ea.themovie.entity.MovieVideo;
 import com.ea.themovie.util.Constants;
 import com.ea.themovie.util.TestData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MockMovieRepositoryImp extends MovieRepositoryImp{
+    public MockMovieRepositoryImp(SharedPreferences sharedPreferences, Gson gson, Retrofit retrofit) {
+        super(sharedPreferences, gson, retrofit);
+    }
+
     @Override
     public void getPopularMovies(int page, final MovieRepositoryCallback<MovieList> callback) {
         Gson gson = new GsonBuilder()

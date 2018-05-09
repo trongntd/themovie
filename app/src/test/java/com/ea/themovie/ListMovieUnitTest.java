@@ -1,10 +1,10 @@
 package com.ea.themovie;
 
-import com.trongntd.themovie.api.MovieApi;
-import com.trongntd.themovie.entity.Movie;
-import com.trongntd.themovie.entity.MovieList;
-import com.trongntd.themovie.presenter.ListMoviePresenter;
-import com.trongntd.themovie.repository.MovieRepository;
+
+import com.ea.themovie.entity.Movie;
+import com.ea.themovie.entity.MovieList;
+import com.ea.themovie.presenter.ListMoviePresenter;
+import com.ea.themovie.repository.MovieRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListMovieUnitTest {
-    ListMoviePresenter presenter;
-    ListMoviePresenter.View view;
-    MovieRepository movieRepository;
+    private ListMoviePresenter presenter;
+    private ListMoviePresenter.View view;
+    private MovieRepository movieRepository;
 
 
     @Before
@@ -61,7 +61,7 @@ public class ListMovieUnitTest {
                 .getPopularMovies(Mockito.eq(1), Mockito.any(MovieRepository.MovieRepositoryCallback.class));;
 
         presenter.loadPopularMovies(1);
-        Mockito.verify(view).showListMovie(movies);
+        Mockito.verify(view).showListMovies(movies);
     }
 
 

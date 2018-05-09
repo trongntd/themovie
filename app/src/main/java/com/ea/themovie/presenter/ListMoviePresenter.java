@@ -19,7 +19,7 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
         public void onSuccess(MovieList movieList) {
             if (view != null) {
                 view.showLoading(false);
-                view.showListMovie(movieList.movies);
+                view.showListMovies(movieList.movies);
             }
         }
 
@@ -48,11 +48,32 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
         movieRepository.getTopRatedMovies(page, mGetMoviesCallback);
     }
 
+    public void loadFavoriteMovies() {
+        List<Movie> movies = movieRepository.getFavoriteMovies();
+        if (view != null) {
+            view.showListMovies(movies);
+            view.showLoading(false);
+        }
+    }
+
+    public void favoriteToggle(Movie movie) {
+        if (movie.isFavorite) {
+            movieRepository.removeFromFavorite(movie);
+        } else {
+            movieRepository.addToFavorite(movie);
+        }
+        if (view != null) {
+            view.refreshMoviesItem(movie, true);
+        }
+    }
+
     public interface View {
         void showLoading(boolean show);
 
-        void showListMovie(List<Movie> movies);
+        void showListMovies(List<Movie> movies);
 
         void showError(String error);
+
+        void refreshMoviesItem(Movie movie, boolean notifyNeighbor);
     }
 }

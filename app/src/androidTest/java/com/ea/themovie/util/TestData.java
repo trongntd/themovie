@@ -1,8 +1,5 @@
 package com.ea.themovie.util;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.util.Log;
 import android.util.SparseArray;
 
 import java.io.BufferedReader;
