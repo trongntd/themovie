@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ea.themovie.MovieApplication;
+
 
 public class BaseFragment extends Fragment{
     protected int layoutResId;
 
     protected View rootView;
     protected FragmentActivity activity;
+    protected MovieApplication application;
 
     @Nullable
     @Override
@@ -34,5 +37,6 @@ public class BaseFragment extends Fragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (FragmentActivity) context;
+        application = (MovieApplication) activity.getApplication();
     }
 }
