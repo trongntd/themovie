@@ -22,8 +22,8 @@ import retrofit2.Retrofit;
 
 public class MovieRepositoryImp implements MovieRepository {
     private MovieApi movieApi;
-    private SharedPreferences sp;
-    private Gson gson;
+    protected SharedPreferences sp;
+    protected Gson gson;
     private Retrofit retrofit;
 
     public MovieRepositoryImp(SharedPreferences sharedPreferences, Gson gson, Retrofit retrofit) {

@@ -13,11 +13,15 @@ public class TestData {
     public static final int TEST_DATA_ID_01 = 1;
     public static final int TEST_DATA_ID_02 = 2;
     public static final int TEST_DATA_ID_03 = 3;
+    public static final int TEST_DATA_ID_04 = 4;
+    public static final int TEST_DATA_ID_05 = 5;
 
     private static SparseArray<String> movieApiData = new SparseArray<>();
     static {
         movieApiData.put(TEST_DATA_ID_01,"api_data_popular_movies.json");
         movieApiData.put(TEST_DATA_ID_03,"api_data_most_rated_movies.json");
+        movieApiData.put(TEST_DATA_ID_04,"api_data_popular_movies.json");
+        movieApiData.put(TEST_DATA_ID_05,"api_data_most_rated_movies.json");
     }
 
     public static String getMovieApiData(int testId) {

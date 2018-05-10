@@ -22,9 +22,6 @@ public class Movie {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Movie) {
-            return ((Movie) obj).id == this.id;
-        }
-        return super.equals(obj);
+        return ((Movie) obj).id == this.id;
     }
 }

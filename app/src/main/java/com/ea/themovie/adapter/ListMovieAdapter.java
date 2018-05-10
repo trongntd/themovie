@@ -36,10 +36,6 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.View
         mList.addAll(list);
     }
 
-    public void addData(List<Movie> list) {
-        mList.addAll(list);
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -79,11 +75,6 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.View
             mList.set(pos, movie);
             notifyItemChanged(pos);
         }
-    }
-
-    public void removeItem(Movie movie) {
-        mList.remove(movie);
-        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

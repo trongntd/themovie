@@ -2,7 +2,7 @@ package com.ea.themovie.mock;
 
 import com.ea.themovie.MovieApplication;
 import com.ea.themovie.component.DaggerMovieComponent;
-import com.ea.themovie.module.AppModule;
+import com.ea.themovie.module.MockAppModule;
 import com.ea.themovie.module.MockNetModule;
 
 public class MockMovieApplication extends MovieApplication {
@@ -10,7 +10,7 @@ public class MockMovieApplication extends MovieApplication {
     protected void initialComponent() {
         mMovieComponent = DaggerMovieComponent.builder()
                 .netModule(new MockNetModule())
-                .appModule(new AppModule(this))
+                .appModule(new MockAppModule(this))
                 .build();
     }
 }
