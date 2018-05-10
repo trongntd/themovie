@@ -75,7 +75,6 @@ public class MovieRepositoryImp implements MovieRepository {
     @Override
     public void addToFavorite(Movie movie) {
         List<Movie> movies = getFavoriteMovies();
-        movie.isFavorite = true;
         movies.add(movie);
         saveFavoriteMovies(movies);
     }
@@ -83,7 +82,6 @@ public class MovieRepositoryImp implements MovieRepository {
     @Override
     public void removeFromFavorite(Movie movie) {
         List<Movie> movies = getFavoriteMovies();
-        movie.isFavorite = false;
         movies.remove(movie);
         saveFavoriteMovies(movies);
     }

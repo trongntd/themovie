@@ -58,8 +58,10 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
 
     public void favoriteToggle(Movie movie) {
         if (movie.isFavorite) {
+            movie.isFavorite = false;
             movieRepository.removeFromFavorite(movie);
         } else {
+            movie.isFavorite = true;
             movieRepository.addToFavorite(movie);
         }
         if (view != null) {

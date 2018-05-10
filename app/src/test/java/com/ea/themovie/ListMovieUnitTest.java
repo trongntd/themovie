@@ -6,6 +6,7 @@ import com.ea.themovie.entity.MovieList;
 import com.ea.themovie.presenter.ListMoviePresenter;
 import com.ea.themovie.repository.MovieRepository;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -82,6 +83,29 @@ public class ListMovieUnitTest {
 
         presenter.loadPopularMovies(1);
         Mockito.verify(view).showError(error);
+    }
+
+    @Test
+    public void listMovies_addFavorite() {
+        Movie movie = new Movie();
+        movie.isFavorite = false;
+        movie.id = 1;
+
+        presenter.favoriteToggle(movie);
+
+        Assert.assertTrue(movie.isFavorite);
+    }
+
+    @Test
+    public void listMovies_removeFavorite() {
+        Movie movie = new Movie();
+        movie.isFavorite = true;
+//        movie
+        movie.id = 1;
+
+        presenter.favoriteToggle(movie);
+
+        Assert.assertTrue(!movie.isFavorite);
     }
 
 
