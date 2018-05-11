@@ -1,13 +1,13 @@
 package com.trongntd.themovie.presenter;
 
 public class BasePresenter<V> {
-    protected V viewAction;
+    protected V view;
 
     public void attachView(V viewAction){
-        this.viewAction = viewAction;
+        this.view = viewAction;
     }
 
     public void detachView(){
-        this.viewAction = null;
+        this.view = null;
     }
 }

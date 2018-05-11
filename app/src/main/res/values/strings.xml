@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TheMovie</string>
+    <string name="content_desc">Image</string>
 </resources>

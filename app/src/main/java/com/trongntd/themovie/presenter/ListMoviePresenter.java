@@ -1,51 +1,47 @@
 package com.trongntd.themovie.presenter;
 
-import android.util.Log;
-
-import com.trongntd.themovie.api.MovieConnector;
 import com.trongntd.themovie.entity.Movie;
 import com.trongntd.themovie.entity.MovieList;
+import com.trongntd.themovie.repository.MovieRepository;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
+    private MovieRepository movieRepository;
 
-public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.ViewAction>{
+    public ListMoviePresenter(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
     public void loadPopularMovies(int page) {
-        if (viewAction != null) {
-            viewAction.showLoading(true);
+        if (view != null) {
+            view.showLoading(true);
         }
-        MovieConnector.getInstance().getPopularMovies(page, new Callback<MovieList>() {
-            @Override
-            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                if (viewAction != null) {
-                    viewAction.showLoading(false);
-                }
 
-                if (response.isSuccessful()) {
-                    MovieList movieList = response.body();
-                    for (Movie m : movieList.movies) {
-                        Log.e("loadPopularMovies", "title : " + m.title);
-                    }
+        movieRepository.getPopularMovies(page, new MovieRepository.MovieRepositoryCallback<MovieList>() {
+            @Override
+            public void onSuccess(MovieList movieList) {
+                if (view != null) {
+                    view.showLoading(false);
+                    view.showListMovie(movieList.movies);
                 }
             }
 
             @Override
-            public void onFailure(Call<MovieList> call, Throwable t) {
-                if (viewAction != null) {
-                    viewAction.showLoading(false);
-                    viewAction.showError("Loading movie failed");
+            public void onError(int error, String message) {
+                if (view != null) {
+                    view.showLoading(false);
+                    view.showError(message);
                 }
             }
         });
     }
 
-    public interface ViewAction{
+    public interface View {
         void showLoading(boolean show);
+
         void showListMovie(List<Movie> movies);
+
         void showError(String error);
     }
 }
