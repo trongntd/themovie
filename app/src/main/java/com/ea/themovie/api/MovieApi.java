@@ -2,6 +2,7 @@ package com.ea.themovie.api;
 
 
 import com.ea.themovie.entity.MovieList;
+import com.ea.themovie.entity.MovieReviews;
 import com.ea.themovie.entity.MovieVideo;
 import com.ea.themovie.util.Constants;
 
@@ -18,5 +19,8 @@ public interface MovieApi {
     Call<MovieList> getTopRatedMovies(@Query("page") int page);
 
     @GET("3/movie/{movie_id}/videos?api_key=" + Constants.API_KEY)
-    Call<MovieVideo> getMovieVideo(@Path("movie_id") String movieId);
+    Call<MovieVideo> getMovieVideos(@Path("movie_id") String movieId);
+
+    @GET("3/movie/{movie_id}/reviews?api_key=" + Constants.API_KEY)
+    Call<MovieReviews> getMovieReviews(@Path("movie_id") String movieId);
 }

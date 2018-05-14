@@ -44,7 +44,7 @@ public class ListMovieUnitTest {
 
     @Test
     public void loadListMovie_withRepositoryHavingMovies_callShowListMovie() {
-        Movie movie = new Movie();
+        Movie movie = new Movie(1, "title", "overview", "posterPath", "releaseDate", 0.0);
         final List<Movie> movies = new ArrayList<Movie>();
         movies.add(movie);
 
@@ -89,7 +89,6 @@ public class ListMovieUnitTest {
     public void listMovies_addFavorite() {
         Movie movie = new Movie();
         movie.isFavorite = false;
-        movie.id = 1;
 
         presenter.favoriteToggle(movie);
 
@@ -100,8 +99,6 @@ public class ListMovieUnitTest {
     public void listMovies_removeFavorite() {
         Movie movie = new Movie();
         movie.isFavorite = true;
-//        movie
-        movie.id = 1;
 
         presenter.favoriteToggle(movie);
 

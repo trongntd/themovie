@@ -3,8 +3,8 @@ package com.ea.themovie.presenter;
 public class BasePresenter<V> {
     protected V view;
 
-    public void attachView(V viewAction){
-        this.view = viewAction;
+    public void attachView(V view){
+        this.view = view;
     }
 
     public void detachView(){

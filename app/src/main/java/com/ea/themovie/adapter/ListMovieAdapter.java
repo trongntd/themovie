@@ -42,6 +42,7 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.View
         View view = inflater.inflate(R.layout.item_movie_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.ivFavourite.setOnClickListener(this);
+        viewHolder.itemView.setOnClickListener(this);
         return viewHolder;
     }
 
@@ -51,6 +52,7 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.View
         holder.tvTitle.setText(movie.title);
         holder.ivFavourite.setSelected(movie.isFavorite);
         holder.ivFavourite.setTag(movie);
+        holder.itemView.setTag(movie);
         ImageUtil.loadImage(movie.posterPath, holder.ivPoster);
     }
 
@@ -64,6 +66,10 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.View
         if (view.getId() == R.id.iv_favorite) {
             if (listener != null) {
                 listener.onFavoriteToggle((Movie) view.getTag());
+            }
+        } else {
+            if (listener != null) {
+                listener.onItemClick((Movie) view.getTag());
             }
         }
     }
@@ -91,5 +97,6 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.View
 
     public interface OnItemMovieClick{
         void onFavoriteToggle(Movie movie);
+        void onItemClick(Movie movie);
     }
 }

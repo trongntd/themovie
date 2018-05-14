@@ -6,7 +6,9 @@ import com.ea.themovie.api.Error;
 import com.ea.themovie.api.MovieApi;
 import com.ea.themovie.entity.Movie;
 import com.ea.themovie.entity.MovieList;
+import com.ea.themovie.entity.MovieReviews;
 import com.ea.themovie.entity.MovieVideo;
+import com.ea.themovie.entity.Video;
 import com.ea.themovie.util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,8 +59,13 @@ public class MovieRepositoryImp implements MovieRepository {
     }
 
     @Override
-    public void getMovieVideo(String movieId, final MovieRepositoryCallback<MovieVideo> callback) {
-        movieApi.getMovieVideo(movieId).enqueue(new MobileApiCallback<>(callback));
+    public void getMovieVideos(String movieId, final MovieRepositoryCallback<MovieVideo> callback) {
+        movieApi.getMovieVideos(movieId).enqueue(new GetMovieVideosCallback(callback));
+    }
+
+    @Override
+    public void getMovieReviews(String movieId, final MovieRepositoryCallback<MovieReviews> callback) {
+        movieApi.getMovieReviews(movieId).enqueue(new MobileApiCallback<>(callback));
     }
 
     @Override
@@ -100,6 +107,37 @@ public class MovieRepositoryImp implements MovieRepository {
         }
     }
 
+    class GetMovieVideosCallback extends MobileApiCallback<MovieVideo> {
+
+        GetMovieVideosCallback(MovieRepositoryCallback<MovieVideo> callback) {
+            super(callback);
+        }
+
+        @Override
+        public void onResponse(Call<MovieVideo> call, Response<MovieVideo> response) {
+            if (callback != null) {
+                if (response.isSuccessful()) {
+                    MovieVideo movieVideo = response.body();
+                    if (movieVideo != null) {
+                        List<Video> list = new ArrayList<>();
+                        for (Video video : movieVideo.videos) {
+                            if (Constants.VIDEO_TYPE_TRAILER.equals(video.type)) {
+                                list.add(video);
+                            }
+                        }
+                        movieVideo.videos = list;
+                        callback.onSuccess(movieVideo);
+                    } else {
+                        callback.onError(Error.UNKNOWN, null);
+                    }
+
+                } else {
+                    callback.onError(response.code(), response.message());
+                }
+            }
+        }
+    }
+
     class GetListMoviesCallback extends MobileApiCallback<MovieList> {
 
         GetListMoviesCallback(MovieRepositoryCallback<MovieList> callback) {
@@ -111,7 +149,9 @@ public class MovieRepositoryImp implements MovieRepository {
             if (callback != null) {
                 if (response.isSuccessful()) {
                     MovieList movieList = response.body();
-                    markFavorite(movieList.movies);
+                    if (movieList != null) {
+                        markFavorite(movieList.movies);
+                    }
                     callback.onSuccess(movieList);
                 } else {
                     callback.onError(response.code(), response.message());

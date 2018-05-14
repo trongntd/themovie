@@ -34,6 +34,7 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
 
     public void loadPopularMovies(int page) {
         if (view != null) {
+            view.prepareLoading();
             view.showLoading(true);
         }
 
@@ -42,6 +43,7 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
 
     public void loadMostRatedMovies(int page) {
         if (view != null) {
+            view.prepareLoading();
             view.showLoading(true);
         }
 
@@ -70,6 +72,8 @@ public class ListMoviePresenter extends BasePresenter<ListMoviePresenter.View> {
     }
 
     public interface View {
+        void prepareLoading();
+
         void showLoading(boolean show);
 
         void showListMovies(List<Movie> movies);

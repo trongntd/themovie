@@ -14,18 +14,15 @@ import com.ea.themovie.fragment.MostRatedMovieFragment;
 import com.ea.themovie.fragment.PopularMovieFragment;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomePagerAdapter extends FragmentStatePagerAdapter {
-    private String[] mList = {
-            PopularMovieFragment.class.getName(),
-            MostRatedMovieFragment.class.getName(),
-            FavoriteMovieFragment.class.getName()
-    };
-    private int[] mTitle = {R.string.home_popular, R.string.home_most_rated, R.string.home_my_favorite};
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    private List<Fragment> mListFragments = new ArrayList<>();
+    private List<Integer> mTitles = new ArrayList<>();
     private Context mContext;
-    private SparseArray<Fragment> mMapCache = new SparseArray<>();
 
-    public HomePagerAdapter(Context context,FragmentManager fm) {
+    public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -33,11 +30,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         try {
-            Class<?> fragmentClass = Class.forName(mList[position]);
-            Constructor<?> ctr = fragmentClass.getConstructor();
-            Fragment fragment = (Fragment) ctr.newInstance();
-            mMapCache.put(position, fragment);
-            return fragment;
+            return mListFragments.get(position);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,21 +40,27 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
-        mMapCache.remove(position);
+    }
+
+    public void addFragment(Fragment fragment, int titleResId) {
+        mListFragments.add(fragment);
+        mTitles.add(titleResId);
     }
 
     public Fragment getItemByPosition(int position) {
-        return mMapCache.get(position);
+        if (position >= 0 && position < getCount())
+            return mListFragments.get(position);
+        return null;
     }
 
     @Override
     public int getCount() {
-        return mList.length;
+        return mListFragments.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getString(mTitle[position]);
+        return mContext.getString(mTitles.get(position));
     }
 }

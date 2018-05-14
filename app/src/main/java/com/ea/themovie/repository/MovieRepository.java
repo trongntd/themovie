@@ -3,6 +3,7 @@ package com.ea.themovie.repository;
 
 import com.ea.themovie.entity.Movie;
 import com.ea.themovie.entity.MovieList;
+import com.ea.themovie.entity.MovieReviews;
 import com.ea.themovie.entity.MovieVideo;
 
 import java.util.List;
@@ -12,7 +13,9 @@ public interface MovieRepository {
 
     void getTopRatedMovies(int page, MovieRepositoryCallback<MovieList> callback);
 
-    void getMovieVideo(String movieId, MovieRepositoryCallback<MovieVideo> callback);
+    void getMovieVideos(String movieId, MovieRepositoryCallback<MovieVideo> callback);
+
+    void getMovieReviews(String movieId, MovieRepositoryCallback<MovieReviews> callback);
 
     List<Movie> getFavoriteMovies();
 

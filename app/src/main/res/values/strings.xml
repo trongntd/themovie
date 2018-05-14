@@ -5,4 +5,14 @@
     <string name="home_most_rated">Most Rated</string>
     <string name="home_my_favorite">My Favorite</string>
     <string name="home_retry">Retry</string>
+
+    <string name="movie_detail">Details</string>
+    <string name="movie_review">Reviews</string>
+    <string name="movie_trailers">Trailers</string>
+    <string name="no_trailer">No Trailer</string>
+
+    <string name="review_empty">No Review</string>
+    <string name="btn_read_more">Read more</string>
+
+    <string name="api_unknown_error">Could not connect to service</string>
 </resources>
