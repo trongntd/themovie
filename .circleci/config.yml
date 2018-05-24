@@ -45,12 +45,6 @@ jobs:
           command: mv $APP_HOME/build/reports/jacoco/test $APP_HOME/build/reports/jacoco/coverage
       - run:
           command: cp -r $APP_HOME/build/reports/jacoco/coverage $CIRCLE_ARTIFACTS
-      - run:
-          command: cp -r $APP_HOME/build/outputs $CIRCLE_ARTIFACTS
-      -run:
-          command: cp -r $APP_HOME/build/reports $CIRCLE_ARTIFACTS
-      - run:
-          command: cp -r $APP_HOME/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
       - store_artifacts:
           path: app/build/reports
           destination: reports
