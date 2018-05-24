@@ -33,7 +33,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run Tests
-          command: ADB_INSTALL_TIMEOUT=40 ./gradlew jacocoTestReport --stacktrace -PdisablePreDex: timeout: 5400
+          command: ./gradlew jacocoTestReport --stacktrace -PdisablePreDex
       - run:
           name: rename the report folder of jacoco to meet the report name in the plugin
           command: mv $APP_HOME/build/reports/jacoco/jacocoTestReport $APP_HOME/build/reports/jacoco/test
