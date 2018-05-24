@@ -14,6 +14,17 @@ jobs:
          name: Chmod permissions
          command: sudo chmod +x ./gradlew
       - run:
+          name: start the emulator
+          command: emulator -avd circleci-android22 -no-audio -no-window: | background: true | parallel: true
+      - run:
+          name: wait for it to have booted
+          command: circle-android wait-for-boot
+      - run:
+          command: sleep 30
+      - run:
+          name: unlock the emulator screen
+          command: adb shell input keyevent 82
+      - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
@@ -22,10 +33,29 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew test
+          command: ADB_INSTALL_TIMEOUT=40 ./gradlew jacocoTestReport --stacktrace -PdisablePreDex: timeout: 5400
+      - run:
+          name: rename the report folder of jacoco to meet the report name in the plugin
+          command: mv $APP_HOME/build/reports/jacoco/jacocoTestReport $APP_HOME/build/reports/jacoco/test
+      - run:
+          name: run coveralls to upload result to Coveralls
+          command: ./gradlew coveralls
+      - run:
+          name: copy coverage result to artifacts
+          command: mv $APP_HOME/build/reports/jacoco/test $APP_HOME/build/reports/jacoco/coverage
+      - run:
+          command: cp -r $APP_HOME/build/reports/jacoco/coverage $CIRCLE_ARTIFACTS
+      - run:
+          namd: copy the build outputs to artifacts
+          command: cp -r $APP_HOME/build/outputs $CIRCLE_ARTIFACTS
+      -run:
+          name: copy the build reports to artifacts
+          command: cp -r $APP_HOME/build/reports $CIRCLE_ARTIFACTS
+      - run:
+          name: copy the test results to the test results directory.
+          command: cp -r $APP_HOME/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
       - store_artifacts:
           path: app/build/reports
           destination: reports
       - store_test_results:
           path: app/build/test-results
-      # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples    
