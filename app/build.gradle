@@ -17,7 +17,6 @@ buildscript {
 }
 
 tasks.coveralls {
-    dependsOn 'check'
     onlyIf { System.getenv("COVERALLS_REPO_TOKEN") }
 }
 
