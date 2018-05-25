@@ -97,6 +97,8 @@ dependencies {
     // youtube
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
+    implementation 'org.apache.httpcomponents:httpmime:4.3.6'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation('com.android.support.test.espresso:espresso-contrib:3.0.2') {
