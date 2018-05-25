@@ -1,10 +1,12 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
+plugins {
+    id "kotlin-android"
+    id "otlin-kapt"
+    id "kotlin-android-extensions"
+    id "jacoco"
+    id "com.github.kt3k.coveralls" version "2.5.0"
+}
 
 buildscript {
     repositories {
@@ -12,7 +14,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.5.0'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
     }
 }
 
@@ -97,7 +99,7 @@ dependencies {
     // youtube
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
-    implementation 'org.apache.httpcomponents:httpmime:4.3.6'
+    implementation 'org.apache.httpcomponents:httpmime:4.3'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
