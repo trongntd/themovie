@@ -34,6 +34,8 @@ test:
     # unlock the emulator screen
     - sleep 30
     - adb shell input keyevent 82
+    # Set permission for gradlew
+    - sudo chmod +x ./gradlew
     # run tests against the emulator.
     - ADB_INSTALL_TIMEOUT=40 ./gradlew jacocoTestReport --stacktrace -PdisablePreDex:
         timeout: 5400
